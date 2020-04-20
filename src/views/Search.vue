@@ -7,9 +7,9 @@
       <div class = "container">
         <div class="form-group" style="width: 50%;margin: auto;">
           <div class = "input-group">
-            <input class="form-control form-control-lg" type="text" placeholder="City Name">  
+            <input class="form-control form-control-lg" type="text" placeholder="City Name" v-model="city_name">  
             <div class="input-group-append">
-              <button class="btn " type="button">Go</button>
+              <button class="btn " type="button" @click="handleInput">Go</button>
             </div>
           </div>
           
@@ -17,7 +17,7 @@
         <div class="row" style="margin-top: 10%">          
           <div class="card col-sm">
             <div class = "image">
-              <img src="@/assets/scrape.svg" alt="Avatar" style="width:70%; margin: 8%;">
+              <img src="../assets/scrape.svg" alt="Avatar" style="width:70%; margin: 8%;">
             </div>
             <div class="container"> 
               <p>Download all the restarurants data by scraping Zomato</p>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Search",
   async mounted() {
@@ -63,8 +64,43 @@ export default {
   },
   data() {
     return {
+      city_name: "",
       repairs: []
     };
+  },
+  methods: {  
+      handleInput() {
+        let url = "https://zomato-4a45e.firebaseio.com/" + this.city_name + ".json"
+        axios.get(url).then((response) => {
+          if (response.data) {
+            console.log(response.data)
+            this.$router.push({name: "Results", params: {city_name: this.city_name, analyzed: 400, 
+                                                        all_list: response.data}})
+          } else {
+            // Handle the case by hitting our server to check if we can process this data
+            let header = "We are working on it"
+            let path = "Progress"
+            let footer = "Our servers are processing the data for " + this.city_name + " right now. It should be accessible in a few minutes."
+
+            if (this.city_name == '404') {
+              header = "Uh Oh.. This should not have happened"
+              path = "server"
+              footer = "The servers are down. We will get it up are running as soon as possible"
+            }
+            
+            else if(this.city_name == 'aandu gaandu') {
+              header = "Non data found for " + this.city_name
+              path = 'nodata'
+              footer = ""
+            }
+            
+            this.$router.push({name: "Processing", params: {header_message: header,
+                                                            path_img: path,
+                                                            bottom_message: footer}})
+
+          }
+        })  
+      }
   }
 };
 </script>

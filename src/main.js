@@ -6,7 +6,9 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 
 axios.defaults.baseURL = "http://1240d074.ngrok.io/";
+
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+
 
 Vue.use(VueAxios, axios);
 

@@ -54,7 +54,7 @@ export default {
   name: "Header",
   data() {
     return {
-      time: "Home Screen"
+      time: ""
     };
   },
   methods: {}
