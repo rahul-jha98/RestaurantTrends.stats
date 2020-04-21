@@ -6,7 +6,8 @@
         </div>
         <div class = "title">{{title}}</div>
         <div class = 'content-space' style=""> 
-            <img :src="url" width="auto" height="100%"/>
+            <img :src="url" width="auto" height="100%" v-if="type == 'image'"/>
+            <iframe :src="url" width="80%" height="100%" v-if="type == 'html'" frameBorder="0"/>
         </div>
         </div>
     </div>
@@ -44,7 +45,8 @@ export default {
     return {
       url: "",
       selectedName: "",
-      title: ""
+      title: "",
+      type: ""
     };
   },
   methods: {
@@ -53,6 +55,7 @@ export default {
      let info = this.all_list[name];
      this.url = info.url;
      this.title = info.longtext;
+     this.type = info.type;
    }
   },
   mounted() {
@@ -69,6 +72,7 @@ export default {
 
 .content-space {
   height: 80vh;
+  background:url(../assets/spinner.gif) center center no-repeat;
 }
 
 .location {
@@ -110,8 +114,12 @@ export default {
     height: 75%;
     width: 75%;
     background-color: #F5F5F5;
+    overflow-y:hidden;
   }
 
+  .stats-list:hover {
+    overflow-y: auto;
+  }
   .pothole {
     padding: 1rem;
     padding-bottom: 0.9rem;
@@ -143,22 +151,6 @@ export default {
       font-size: 2rem;
     }
 
-    .reported-selector {
-      flex: 1;
-      background-color: #443695;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-right: 2rem;
-      align-items: flex-end;
-      cursor: pointer;
-
-      &:hover {
-        box-shadow: 0px 0px 5px #444444;
-        transition: all 100ms ease-in;
-      }
-    }
-
     .repaired-selector {
       flex: 1;
       background-color: #E65100;
@@ -186,5 +178,7 @@ export default {
         background-color:#EF6C00;
         color:white;
       }
+
+
 }
 </style>

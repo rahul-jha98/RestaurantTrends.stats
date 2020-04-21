@@ -74,8 +74,8 @@ export default {
         axios.get(url).then((response) => {
           if (response.data) {
             console.log(response.data)
-            this.$router.push({name: "Results", params: {city_name: this.city_name, analyzed: 400, 
-                                                        all_list: response.data}})
+            this.$router.push({name: "Results", params: {city_name: this.city_name, analyzed: response.data.count, 
+                                                        all_list: response.data.data}})
           } else {
             // Handle the case by hitting our server to check if we can process this data
             let header = "We are working on it"

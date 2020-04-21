@@ -3,8 +3,8 @@
     <nav class="app-navbar navbar navbar-expand-lg navbar-dark">
       <div>
         <a class="navbar-brand" href="#">
-          <img src="@/assets/logo.png" class="header-logo" />
-          Zomato Visualizer
+          <img src="@/assets/logo.svg" class="header-logo" height="60%"/>
+          FoodSuite
         </a>
         <button
           class="navbar-toggler"
@@ -70,9 +70,11 @@ export default {
   justify-content: space-between;
 
   .header-logo {
-    height: 30px;
+    height: 25px;
     width: auto;
+    margin: auto;
     margin-right: 5px;
+    margin-bottom: 6px;
   }
 
   &--clock {
