@@ -5,9 +5,9 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-axios.defaults.baseURL = "http://1240d074.ngrok.io/";
-
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+axios.defaults.baseURL = "https://14b3cb60.ngrok.io/";
+// axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+// axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
 
 
 Vue.use(VueAxios, axios);

@@ -51,17 +51,6 @@
 import axios from "axios";
 export default {
   name: "Search",
-  async mounted() {
-    this.$http
-      .get("/repair")
-      .then(({ data }) => {
-        console.log(data);
-        this.repairs = data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  },
   data() {
     return {
       city_name: "",
@@ -71,6 +60,7 @@ export default {
   methods: {  
       handleInput() {
         let url = "https://zomato-4a45e.firebaseio.com/" + this.city_name + ".json"
+        let url2 = this.$http.defaults.baseURL + 'api/process'
         axios.get(url).then((response) => {
           if (response.data) {
             console.log(response.data)
@@ -78,25 +68,39 @@ export default {
                                                         all_list: response.data.data}})
           } else {
             // Handle the case by hitting our server to check if we can process this data
-            let header = "We are working on it"
-            let path = "Progress"
-            let footer = "Our servers are processing the data for " + this.city_name + " right now. It should be accessible in a few minutes."
+            
+            console.log(url2)
+            axios.get(url2 + '?city=' + this.city_name).then((res) => {
+              let data = res.data;
+              
+              if (data.status == 1) {
+                let header = "We are working on it"
+                let path = "Progress"
+                let footer = "Our servers are processing the data for " + data.city_name + " right now. It should be accessible in a few minutes."
 
-            if (this.city_name == '404') {
-              header = "Uh Oh.. This should not have happened"
-              path = "server"
-              footer = "The servers are down. We will get it up are running as soon as possible"
-            }
-            
-            else if(this.city_name == 'aandu gaandu') {
-              header = "Non data found for " + this.city_name
-              path = 'nodata'
-              footer = ""
-            }
-            
-            this.$router.push({name: "Processing", params: {header_message: header,
+                this.$router.push({name: "Processing", params: {header_message: header,
                                                             path_img: path,
                                                             bottom_message: footer}})
+              } else {
+                
+                let header = "Non data found for " + this.city_name
+                let path = 'nodata'
+                let footer = ""
+                
+                this.$router.push({name: "Processing", params: {header_message: header,
+                                                            path_img: path,
+                                                            bottom_message: footer}})
+              }
+            }).catch((err) => {
+                let header = "Uh Oh.. This should not have happened"
+                let path = "server"
+                let footer = "The servers are down. We will get it up are running as soon as possible"
+                console.log(err)
+
+                this.$router.push({name: "Processing", params: {header_message: header,
+                                                            path_img: path,
+                                                            bottom_message: footer}})
+            })         
 
           }
         })  
