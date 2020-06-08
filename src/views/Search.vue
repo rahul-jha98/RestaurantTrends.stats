@@ -63,13 +63,11 @@ export default {
         let url2 = this.$http.defaults.baseURL + 'api/process'
         axios.get(url).then((response) => {
           if (response.data) {
-            console.log(response.data)
             this.$router.push({name: "Results", params: {city_name: this.city_name, analyzed: response.data.count, 
                                                         all_list: response.data.data}})
           } else {
             // Handle the case by hitting our server to check if we can process this data
             
-            console.log(url2)
             axios.get(url2 + '?city=' + this.city_name).then((res) => {
               let data = res.data;
               
@@ -91,11 +89,10 @@ export default {
                                                             path_img: path,
                                                             bottom_message: footer}})
               }
-            }).catch((err) => {
+            }).catch(() => {
                 let header = "Uh Oh.. This should not have happened"
                 let path = "server"
                 let footer = "The servers are down. We will get it up are running as soon as possible"
-                console.log(err)
 
                 this.$router.push({name: "Processing", params: {header_message: header,
                                                             path_img: path,

@@ -5,7 +5,7 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-axios.defaults.baseURL = "https://14b3cb60.ngrok.io/";
+axios.defaults.baseURL = "https://ba4251d6.ngrok.io/";
 // axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 // axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
 
