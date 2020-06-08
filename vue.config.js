@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath:'/ZomatoVisualizerFrontend/'
+    publicPath:'/RestaurantTrends.stats/'
 }
